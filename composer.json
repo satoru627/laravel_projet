@@ -79,6 +79,12 @@
             "pestphp/pest-plugin": true,
             "php-http/discovery": true
         }
+        "scripts": {
+    "vercel": [
+        "npm install",
+        "npm run build"
+    ]
+}
     },
     "minimum-stability": "stable",
     "prefer-stable": true
