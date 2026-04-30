@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 use App\Models\Categorie;
 
 class AdminCategorieController extends Controller
@@ -36,17 +37,21 @@ class AdminCategorieController extends Controller
         $validated = $request->validate([
             'nom' => 'required|string|max:255|unique:categories',
             'description' => 'nullable|string',
-            'image' => 'nullable|string',
-            'actif' => 'boolean',
+            'image' => 'nullable|image|mimes:jpeg,png,jpg,webp|max:2048', // ✅
         ], [
             'nom.required' => 'Le nom est obligatoire',
             'nom.unique' => 'Cette catégorie existe déjà',
         ]);
 
+        $imagePath = null;
+        if ($request->hasFile('image')) { // ✅
+            $imagePath = $request->file('image')->store('categories', 'public');
+        }
+
         Categorie::create([
             'nom' => $validated['nom'],
             'description' => $validated['description'] ?? null,
-            'image' => $validated['image'] ?? null,
+            'image' => $imagePath, // ✅
             'actif' => $request->has('actif'),
         ]);
 
@@ -84,13 +89,21 @@ class AdminCategorieController extends Controller
         $validated = $request->validate([
             'nom' => 'required|string|max:255|unique:categories,nom,' . $id,
             'description' => 'nullable|string',
-            'image' => 'nullable|string',
+            'image' => 'nullable|image|mimes:jpeg,png,jpg,webp|max:2048', // ✅
         ]);
+
+        $imagePath = $categorie->image; // on garde l'ancienne par défaut
+        if ($request->hasFile('image')) { // ✅
+            if ($categorie->image) {
+                Storage::disk('public')->delete($categorie->image);
+            }
+            $imagePath = $request->file('image')->store('categories', 'public');
+        }
 
         $categorie->update([
             'nom' => $validated['nom'],
             'description' => $validated['description'] ?? null,
-            'image' => $validated['image'] ?? null,
+            'image' => $imagePath, // ✅
             'actif' => $request->has('actif'),
         ]);
 

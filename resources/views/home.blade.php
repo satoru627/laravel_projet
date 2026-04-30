@@ -32,7 +32,7 @@
                 <span class="inline-block mt-2 text-yellow-700 font-semibold">Satisfait ou remboursé !</span>
             </p>
             <div class="flex flex-col sm:flex-row gap-4 justify-center md:justify-start animate-fade-up">
-                <a href="{{ route('produits.index') }}" class="bg-primary-500 hover:bg-primary-600 text-white px-8 py-4 rounded-full font-bold shadow-xl hover:scale-105 hover:shadow-2xl transition duration-150 flex items-center gap-2">
+                <a href="{{ route('produits.produit') }}" class="bg-primary-500 hover:bg-primary-600 text-white px-8 py-4 rounded-full font-bold shadow-xl hover:scale-105 hover:shadow-2xl transition duration-150 flex items-center gap-2">
                     <i class="fas fa-shopping-bag"></i> Voir les produits
                 </a>
                 <a href="#promotions" class="border-2 border-primary-400 text-primary-700 bg-white px-8 py-4 rounded-full font-bold hover:bg-primary-50 hover:text-primary-700 hover:border-pink-400 transition shadow flex items-center gap-2">
@@ -75,7 +75,7 @@
             Découvrez notre sélection de produits de qualité avec livraison rapide partout au Cameroun
         </p>
         <div class="flex flex-col sm:flex-row justify-center gap-4">
-            <a href="{{ route('produits.index') }}" class="bg-primary-500 hover:bg-primary-600 text-white px-8 py-4 rounded-lg font-bold shadow-lg transition">
+            {{-- <a href="{{ route('produits.index') }}" class="bg-primary-500 hover:bg-primary-600 text-white px-8 py-4 rounded-lg font-bold shadow-lg transition"> --}}
                 Voir les produits
             </a>
             <a href="#promotions" class="border-2 border-white text-white px-8 py-4 rounded-lg font-bold hover:bg-white hover:text-primary-600 transition shadow-lg">
@@ -95,7 +95,7 @@
                     Découvrez notre sélection de produits de qualité avec livraison rapide partout au Cameroun
                 </p>
                 <div class="flex space-x-4">
-                    <a href="{{ route('produits.index') }}" class="bg-white text-primary-600 px-8 py-3 rounded-lg font-bold hover:bg-gray-100 transition">
+                    {{-- <a href="{{ route('produits.index') }}" class="bg-white text-primary-600 px-8 py-3 rounded-lg font-bold hover:bg-gray-100 transition"> --}}
                         Voir les produits
                     </a>
                     <a href="#promotions" class="border-2 border-white text-white px-8 py-3 rounded-lg font-bold hover:bg-white hover:text-primary-600 transition">
@@ -133,7 +133,7 @@
                     rounded-full border-4 border-primary-100 group-hover:border-primary-400 transition-shadow shadow-lg 
                     bg-gradient-to-tr from-primary-100 via-white to-primary-50 overflow-hidden">
                     @if($categorie->image)
-                        <img src="{{ $categorie->image }}" alt="{{ $categorie->nom }}" class="object-cover w-full h-full rounded-full group-hover:scale-110 transition">
+                        <img src="{{Storage::url($categorie->image)}}" alt="{{ $categorie->nom }}" class="object-cover w-full h-full rounded-full group-hover:scale-110 transition">
                     @else
                         <i class="fas fa-cube text-4xl text-primary-500 group-hover:text-primary-700"></i>
                     @endif
@@ -143,11 +143,11 @@
                 </div>
                 <h3 class="font-extrabold text-lg mb-2 text-primary-700 group-hover:text-primary-900 transition">{{ $categorie->nom }}</h3>
                 <p class="text-sm text-gray-600 mb-4">{{ $categorie->produits_count }} produit{{ $categorie->produits_count > 1 ? 's' : '' }}</p>
-                <button
+                {{-- <button
                     class="mt-2 inline-block px-6 py-2 rounded-full text-primary-700 border border-primary-300 bg-primary-50 hover:bg-primary-500 hover:text-white font-semibold shadow transition"
                     aria-label="Découvrir les produits de {{ $categorie->nom }}">
                     Découvrir
-                </button>
+                </button> --}}
                 <span 
                     class="absolute inset-0 rounded-2xl border-4 border-primary-300 opacity-0 group-hover:opacity-20 pointer-events-none transition"></span>
             </a>
@@ -188,7 +188,7 @@ document.addEventListener('DOMContentLoaded', function () {
                 </span>
                 <span class="bg-gradient-to-r from-primary-400 via-pink-400 to-yellow-300 px-3 py-0.5 rounded-full text-white text-lg font-bold animate-gradient-x shadow-lg hidden md:inline-block">Sélection du moment</span>
             </h2>
-            <a href="{{ route('produits.index') }}" class="inline-flex items-center gap-1 px-7 py-3 rounded-full font-bold shadow-lg bg-primary-100 text-primary-800 hover:bg-primary-400 hover:text-white transition border-2 border-primary-200 hover:scale-105 duration-200">
+            <a href="{{ route('produits.produit') }}" class="inline-flex items-center gap-1 px-7 py-3 rounded-full font-bold shadow-lg bg-primary-100 text-primary-800 hover:bg-primary-400 hover:text-white transition border-2 border-primary-200 hover:scale-105 duration-200">
                 Voir tout <i class="fas fa-arrow-right ml-1"></i>
             </a>
         </div>
@@ -205,7 +205,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
                 <!-- Image du produit avec overlay d'effet -->
                 <div class="relative h-60 flex items-center justify-center bg-gradient-to-t from-primary-50 to-white group-hover:scale-105 transition-transform duration-300">
-                    <img src="{{ $produit->image_principale }}" alt="{{ $produit->nom }}"
+                    <img src="{{Storage::url($produit->image_principale)}}" alt="{{ $produit->nom }}"
                         class="object-contain w-full h-full transition-transform duration-500 group-hover:scale-110 drop-shadow-xl">
                     <!-- overlay pour hover -->
                     <div class="absolute inset-0 bg-black/0 group-hover:bg-black/10 transition-all"></div>
@@ -280,7 +280,7 @@ document.addEventListener('DOMContentLoaded', function () {
             >
                 <!-- Image & promo badge -->
                 <div class="relative overflow-hidden">
-                    <img src="{{ $produit->image_principale }}" alt="{{ $produit->nom }}" 
+                    <img src="{{Storage::url($produit->image_principale)}}" alt="{{ $produit->nom }}" 
                         class="w-full h-64 object-cover transition-transform duration-500 group-hover:scale-105">
                     @php
                         $reduction = round((($produit->prix - $produit->prix_promo) / $produit->prix) * 100);

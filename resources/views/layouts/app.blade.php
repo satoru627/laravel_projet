@@ -69,7 +69,7 @@
                         Accueil
                     </a>
                     <a href="{{ route('produits.index') }}" class="text-gray-700 hover:text-primary-600 font-medium transition relative after:block after:absolute after:-bottom-1 after:left-0 after:h-0.5 after:w-0 hover:after:w-full after:bg-primary-600 after:transition-all after:duration-300">
-                        Produits
+                       tous les Produits
                     </a>
                     @auth
                         @if(auth()->user()->role === 'admin')
@@ -155,7 +155,7 @@
                     Accueil
                 </a>
                 <a href="{{ route('produits.index') }}" class="block text-gray-700 hover:text-primary-600 font-medium transition">
-                    Produits
+                   tous les Produits
                 </a>
                 @auth
                     @if(auth()->user()->role !== 'admin')
@@ -212,7 +212,6 @@
     <main class="min-h-screen">
         @yield('content')
     </main>
-    
     <!-- Footer -->
     <footer class="bg-gradient-to-r from-primary-900 via-gray-900 to-primary-900 text-gray-200 mt-16 shadow-2xl relative z-10 overflow-hidden">
         <div class="absolute inset-0 opacity-10 pointer-events-none">
@@ -242,7 +241,7 @@
                     <h3 class="text-white font-bold text-lg mb-4">Liens rapides</h3>
                     <ul class="space-y-2 text-sm">
                         <li><a href="{{ route('home') }}" class="block px-2 py-1 rounded transition hover:bg-primary-900 hover:underline hover:underline-offset-4 active:bg-primary-700">Accueil</a></li>
-                        <li><a href="{{ route('produits.index') }}" class="block px-2 py-1 rounded transition hover:bg-primary-900 hover:underline hover:underline-offset-4 active:bg-primary-700">Produits</a></li>
+                        <li><a href="{{ route('produits.produit') }}" class="block px-2 py-1 rounded transition hover:bg-primary-900 hover:underline hover:underline-offset-4 active:bg-primary-700">Produits</a></li>
                         <li><a href="{{ route('a-propos') }}" class="block px-2 py-1 rounded transition hover:bg-primary-900 hover:underline hover:underline-offset-4 active:bg-primary-700">À propos</a></li>
                         <li><a href="{{ route('contact') }}" class="block px-2 py-1 rounded transition hover:bg-primary-900 hover:underline hover:underline-offset-4 active:bg-primary-700">Contact</a></li>
                     </ul>

@@ -1,14 +1,14 @@
 @extends('layouts.app')
 
-@section('title', 'Détails du Produit')
+@section('title', 'Détails du Produit') 
 
 @section('content')
 <div class="bg-gray-100 min-h-screen py-8">
     <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
         
         <div class="mb-6">
-            <a href="{{ route('admin.produits.index') }}" class="text-primary-600 hover:text-primary-700 font-semibold">
-                <i class="fas fa-arrow-left mr-2"></i> Retour à la liste des produits
+            <a href="{{ route('home') }}" class="text-primary-600 hover:text-primary-700 font-semibold">
+                <i class="fas fa-arrow-left mr-2"></i> Retour à l'accueil
             </a>
         </div>
 
@@ -17,7 +17,7 @@
         
                 <!-- image principale du produit -->
                 <div class="flex items-center justify-center p-8 w-full md:w-[600px] lg:w-[700px]">
-                    <img class="h-96  object-cover rounded-lg border" src="{{ $produit->image_principale }}" alt="{{ $produit->nom }}">
+                    <img class="h-96  object-cover rounded-lg border" src="{{ Storage::url($produit->image_principale) }}" alt="{{ $produit->nom }}">
                 </div>
                 <!-- <div class="flex items-center justify-center p-8">
                     <img class="h-96 w-96 object-cover rounded-lg border" src="{{ $produit->image_principale }}" alt="{{ $produit->nom }}">
@@ -49,11 +49,7 @@
                         <p class="text-sm text-gray-500">Ajouté le : {{ $produit->created_at->format('d/m/Y') }}</p>
                     </div>
 
-                    <div class="mt-8 flex space-x-3">
-                        <a href="{{ route('admin.produits.edit', $produit->id) }}" class="bg-blue-600 text-white px-6 py-2 rounded-lg hover:bg-blue-700 transition">
-                            Modifier
-                        </a>
-                    </div>
+                  
                 </div>
             </div>
         </div>

@@ -36,6 +36,7 @@ Route::post('/deconnexion', [AuthController::class, 'logout'])->name('logout');
 
 // Produits
 Route::get('/produits', [ProduitController::class, 'index'])->name('produits.index');
+Route::get('/produit', [ProduitController::class, 'produit'])->name('produits.produit');
 Route::get('/produits/{id}', [ProduitController::class, 'show'])->name('produits.show');
 Route::get('/categorie/{id}', [ProduitController::class, 'categorie'])->name('produits.categorie');
 

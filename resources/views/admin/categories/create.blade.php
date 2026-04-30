@@ -16,7 +16,8 @@
         
         <h1 class="text-3xl font-bold text-gray-900 mb-8">Nouvelle Catégorie</h1>
         
-        <form action="{{ route('admin.categories.store') }}" method="POST" class="bg-white rounded-xl shadow-md p-8">
+        {{-- ✅ enctype ajouté --}}
+        <form action="{{ route('admin.categories.store') }}" method="POST" enctype="multipart/form-data" class="bg-white rounded-xl shadow-md p-8">
             @csrf
             
             <div class="space-y-6">
@@ -28,13 +29,13 @@
                     <input type="text" 
                            id="nom" 
                            name="nom" 
-                           value="{{ old('nom') }}" 
-                           required
+                           value="{{ old('nom') }}"
+                           placeholder="Ex: Électronique"
                            class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-primary-500 @error('nom') border-red-500 @enderror">
                     @error('nom')
                         <p class="text-red-600 text-sm mt-1">{{ $message }}</p>
                     @enderror
-                </div>
+                </div> {{-- ✅ </div> ajouté --}}
                 
                 <!-- Description -->
                 <div>
@@ -51,23 +52,44 @@
                     <p class="text-xs text-gray-500 mt-1">Décrivez brièvement cette catégorie</p>
                 </div>
                 
-                <!-- URL Image -->
+                <!-- Image -->
                 <div>
                     <label for="image" class="block text-sm font-semibold text-gray-700 mb-2">
-                        URL de l'image
+                        image
                     </label>
-                    <input type="text" 
-                           id="image" 
-                           name="image" 
-                           value="{{ old('image', 'https://via.placeholder.com/400x300?text=Categorie') }}"
-                           placeholder="https://example.com/image.jpg"
-                           class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-primary-500 @error('image') border-red-500 @enderror">
-                    @error('image')
-                        <p class="text-red-600 text-sm mt-1">{{ $message }}</p>
+
+                    <div id="dropZone"
+                         onclick="document.getElementById('image').click()" {{-- ✅ corrigé --}}
+                         class="border-2 border-dashed border-gray-200 rounded-xl p-6 text-center cursor-pointer hover:bg-gray-50 transition-colors">
+                        <svg class="mx-auto mb-2 text-gray-300 w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"
+                                  d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"/>
+                        </svg>
+                        <p class="text-sm font-medium text-gray-600">Cliquer ou déposer une image</p>
+                        <p class="text-xs text-gray-400 mt-1">JPEG, PNG, WEBP — max 2 Mo</p>
+                    </div>
+
+                    <input type="file"
+                           id="image" {{-- ✅ corrigé --}}
+                           name="image" {{-- ✅ corrigé --}}
+                           accept="image/jpeg,image/png,image/webp"
+                           class="hidden"
+                           onchange="previewImage(event)">
+
+                    @error('image') {{-- ✅ corrigé --}}
+                        <p class="mt-1 text-xs text-red-500">{{ $message }}</p>
                     @enderror
-                    <p class="text-xs text-gray-500 mt-1">URL complète de l'image de la catégorie</p>
+
+                    <div id="image_preview" class="mt-3">
+                        @if(isset($categorie) && $categorie->image) {{-- ✅ corrigé --}}
+                            <img src="{{ Storage::url($categorie->image) }}"
+                                 alt="Image actuelle"
+                                 class="max-h-40 rounded-xl border border-gray-100 object-cover">
+                        @endif
+                    </div>
                 </div>
                 
+                <br><br>
                 <!-- Statut actif -->
                 <div class="flex items-center">
                     <input type="checkbox" 
@@ -78,7 +100,7 @@
                     <label for="actif" class="ml-2 block text-sm font-semibold text-gray-700">
                         Catégorie active
                     </label>
-                </div>
+                </div><br>
                 <p class="text-xs text-gray-500 -mt-4 ml-6">
                     Les catégories inactives ne seront pas visibles sur le site
                 </p>
@@ -99,6 +121,20 @@
         </form>
     </div>
 </div>
+
+{{-- ✅ fonction previewImage ajoutée --}}
+@push('scripts')
+<script>
+    function previewImage(event) {
+        const file = event.target.files[0];
+        if (!file) return;
+        const reader = new FileReader();
+        reader.onload = e => {
+            const preview = document.getElementById('image_preview');
+            preview.innerHTML = `<img src="${e.target.result}" class="max-h-40 rounded-xl border border-gray-100 object-cover" alt="Aperçu">`;
+        };
+        reader.readAsDataURL(file);
+    }
+</script>
+@endpush
 @endsection
-
-

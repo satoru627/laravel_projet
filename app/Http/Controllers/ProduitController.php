@@ -88,4 +88,12 @@ class ProduitController extends Controller
         
         return view('produits.index', compact('produits', 'categories', 'categorie'));
     }
+
+    public function produit()
+    {
+        $produits = Produit::where('actif', true)->orderBy('created_at', 'desc')->paginate(12);
+        $categories = Categorie::where('actif', true)->get();
+        
+        return view('produits.produit', compact('produits', 'categories'));
+     }
 }

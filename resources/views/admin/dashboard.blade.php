@@ -127,7 +127,7 @@
                     @foreach($produitsPopulaires as $item)
                     <div class="flex items-center justify-between p-3 bg-gray-50 rounded-lg">
                         <div class="flex items-center space-x-3">
-                            <img src="{{ $item['produit']->image_principale }}" alt="{{ $item['produit']->nom }}" class="w-12 h-12 object-cover rounded">
+                            <img src="{{ Storage::url($item['produit']->image_principale) }}" alt="{{ $item['produit']->nom }}" class="w-12 h-12 object-cover rounded">
                             <div>
                                 <p class="font-semibold text-gray-900">{{ $item['produit']->nom }}</p>
                                 <p class="text-sm text-gray-500">{{ number_format($item['produit']->prix, 0, ',', ' ') }} FCFA</p>
